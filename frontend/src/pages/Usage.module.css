@@ -4,13 +4,13 @@
   --color-medium: #ffa94d;
   --color-dark: #ff922b;
 }
+
 .usage {
   display: grid;
   grid-template-columns: 30% 35% 28%;
   column-gap: 4rem;
   align-items: start;
   height: calc(100vh - 5rem);
-
   background-image: linear-gradient(
       rgba(36, 42, 46, 0.8),
       rgba(36, 42, 46, 0.8)
@@ -20,7 +20,8 @@
   background-position: center;
 }
 
-.button {
+.button,
+.buttonDisabled {
   background-color: var(--color-medium);
   color: #343a40;
   padding: 1rem 1.2rem;
@@ -35,14 +36,8 @@
 .buttonDisabled {
   background-color: #919191;
   color: #777676;
-  padding: 1rem 1.2rem;
-  border: none;
-  border-radius: 7px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-top: 2rem;
 }
+
 .usage .sidebar ul {
   list-style: none;
   display: flex;
@@ -66,16 +61,6 @@
   background-color: var(--color-lightest);
 }
 
-.sidebar li h3 {
-  grid-row: 1;
-  grid-column: 2;
-}
-
-.sidebar li p {
-  grid-row: 2;
-  grid-column: 2;
-}
-
 .green {
   color: #66a80f;
 }
@@ -96,122 +81,81 @@ form {
   overflow: auto;
 }
 
-.usage .form-add-device {
-  grid-template-columns: 1fr 1.5fr;
-  margin-bottom: 1.6rem;
-  padding: 1.2rem;
-}
-
-label {
-  font-weight: 500;
-}
-
+label,
 input,
-select {
-  font-family: inherit;
-  color: #343a40;
-  font-size: 1.5rem;
-  padding: 0.7rem;
-  text-align: center;
-  border: 1px solid var(--color-light);
-  border-radius: 4px;
-  transition: 0.3s;
-  width: 100%;
-}
-
-input:focus,
-select:focus {
-  outline: none;
-  border: 1px solid var(--color-dark);
-}
-
-form h2 {
-  grid-column: 1 / -1;
-  font-size: 2.2rem;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
-  margin-bottom: 1.6rem;
-}
-
-.devicelist {
-  grid-template-columns: 1fr 12rem;
-  padding: 3.2rem 4rem;
-}
-
-.devicelist {
-  margin-top: 2rem;
-  width: 100%;
-  border-collapse: collapse; /* Collapse borders */
-}
-
-.devicelist thead {
-  background-color: rgb(116, 154, 116);
-  color: #343a40;
-}
-
+select,
+.form-add-device,
 .devicelist th,
-.devicelist td {
-  border: 1px solid var(--color-medium); /* Add a border to all table cells */
-  padding: 10px; /* Add some padding */
-  text-align: left; /* Left align text */
-}
-
-.devicelist tr:nth-child(even) {
-  background-color: rgb(25, 126, 25); /* Color every even row */
-}
-
-.devicelist tr:nth-child(odd) {
-  background-color: rgb(151, 179, 151); /* Color every even row */
-}
-
-.devicelist tr:hover {
-  background-color: orange; /* Add a hover effect */
-  color: rgb(23, 20, 20);
-}
-
-.devicelist th {
-  background-color: var(--color-dark); /* Color the header cells */
-  color: rgb(19, 15, 15);
-  cursor: pointer;
-}
-
-.devicelist td {
-  font-size: 1.2rem;
-}
-
-.msg {
-  display: flex;
-  font-size: large;
-  justify-content: center;
-  font-weight: 200;
-  background-color: #7da26b;
-  padding: 2rem;
-  margin: 2rem;
-}
-
-.danger {
-  display: block;
-  color: #b36b06;
-  text-align: center;
-  font-weight: bold;
-}
-
-.good {
-  display: block;
-  color: rgb(194, 218, 10);
-  font-weight: bold;
-  text-align: center;
-}
-
-.compare {
-  margin: 0 2rem;
-  display: grid;
-  justify-self: center;
-}
-
+.devicelist td,
+.msg,
+.danger,
+.good,
+.compare,
 .sidebar {
-  margin-top: 2rem;
-  margin-left: 2rem;
-  overflow: auto;
-  height: calc(100vh - 30rem);
+  transition: all 0.3s;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .usage {
+    grid-template-columns: 1fr; /* Stack the columns on smaller screens */
+    padding: 1rem;
+  }
+
+  .usage .sidebar ul,
+  .usage .sidebar li {
+    padding: 0.5rem;
+  }
+
+  form,
+  .form-add-device {
+    grid-template-columns: 1fr; /* Adjust form layout */
+  }
+
+  .devicelist {
+    padding: 2rem; /* Adjust padding */
+  }
+}
+
+@media (max-width: 768px) {
+  .button,
+  .buttonDisabled {
+    padding: 0.8rem 1rem; /* Smaller buttons */
+    font-size: 14px; /* Smaller font size */
+  }
+
+  .usage .sidebar ul {
+    font-size: 1.2rem; /* Smaller font size */
+  }
+
+  form {
+    font-size: 1.4rem; /* Smaller form elements */
+  }
+}
+
+@media (max-width: 480px) {
+  .button,
+  .buttonDisabled {
+    padding: 0.6rem 0.8rem; /* Even smaller buttons */
+    margin-top: 1rem; /* Smaller margin top */
+  }
+
+  .usage .sidebar {
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+
+  .msg,
+  .danger,
+  .good,
+  .compare {
+    padding: 1rem; /* Smaller padding */
+    font-size: medium; /* Adjust font size */
+  }
+
+  .devicelist th,
+  .devicelist td {
+    padding: 8px; /* Smaller cell padding */
+    font-size: 1rem; /* Smaller font size in table */
+  }
 }
